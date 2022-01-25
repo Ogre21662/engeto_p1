@@ -29,18 +29,27 @@ other freshwater genera and herring similar to those
 in modern oceans. Other fish such as paddlefish,
 garpike and stingray are also present.'''
          ]
+
+
 users = {'bob': '123',
          'ann': 'pass123',
          'mike': 'password123',
          'liz': 'pass123'}
 
-#fce
+
 def print_line():
     print('-' * 40)
+
+
+def say_hello(name):
+    print('Welcome to the app, ' + name)
+    print('We have 3 texts to be analyzed.')
+
 
 def w_count(i):
     num_of_words = len(TEXTS[i].replace('.', ' ').replace(',', ' ').split())
     return num_of_words
+
 
 def title_w_count(i):
     num_of_title_words = 0
@@ -50,6 +59,7 @@ def title_w_count(i):
             num_of_title_words += 1
     return num_of_title_words
 
+
 def upper_w_count(i):
     num_of_upper_words = 0
     word_list = TEXTS[i].replace('.', ' ').replace(',', ' ').split()
@@ -57,6 +67,7 @@ def upper_w_count(i):
         if word.isupper() and word.isalpha():
             num_of_upper_words += 1
     return num_of_upper_words
+
 
 def lower_w_count(i):
     num_of_lower_words = 0
@@ -66,6 +77,7 @@ def lower_w_count(i):
             num_of_lower_words += 1
     return num_of_lower_words
 
+
 def numeric_w_count(i):
     num_of_num_words = 0
     word_list = TEXTS[i].replace('.', ' ').replace(',', ' ').split()
@@ -73,6 +85,7 @@ def numeric_w_count(i):
         if word.isdigit():
             num_of_num_words += 1
     return num_of_num_words
+
 
 def sum_digits(i):
     sum_of_digits = 0
@@ -124,38 +137,44 @@ def graph(i):
     print_line()
     count_occurrences(i)
 
-# zde zacina MAIN:
-in_name: str = input('username:')
-in_passwd = input('password:')
 
 def user_check(name, passwd):
     if name in users and users[name] == passwd:
         return True
-    return False
+    else:
+        print('wrong name or password, terminating the program.')
+        exit(1)
 
 
-if not user_check(in_name, in_passwd):
-    print('unregistered user, terminating the program.')
-    exit(1)
+def text_number_check(number):
+    if not number.isdigit():
+        print('not a number, terminating the program.')
+        exit(1)
+    if 1 <= int(number) <= 3:
+        print_line()
+        analyze(int(number) - 1)
+        print_line()
+        graph(int(number) - 1)
+        exit(0)
+    else:
+        print('number out of range, terminating the program.')
+        exit(1)
 
-print_line()
 
-def say_hello():
-    print('Welcome to the app, ' + in_name)
-    print('We have 3 texts to be analyzed.')
+def main():
+    in_name = input('username:')
+    in_passwd = input('password:')
 
+    user_check(in_name, in_passwd)
 
-say_hello()
-print_line()
-in_num = input('Enter a number btw. 1 and 3 to select: ')
-
-if 1 <= int(in_num) <= 3:
     print_line()
-    analyze(int(in_num) - 1)
+    say_hello(in_name)
     print_line()
-    graph(int(in_num) - 1)
-    exit(0)
-else:
-    print('number out of range, terminating the program.')
-    exit(1)
-print_line()
+
+    in_num = input('Enter a number btw. 1 and 3 to select: ')
+    text_number_check(in_num)
+    print_line()
+
+
+if __name__ == "__main__":
+    main()
